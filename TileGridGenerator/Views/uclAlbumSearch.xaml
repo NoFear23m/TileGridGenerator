@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="uclAlbumSearch"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TileGridGenerator"
+             xmlns:extensions="clr-namespace:TileGridGenerator.View.Extensions"
+             mc:Ignorable="d" Height="302.089" Width="704.735"
+             extensions:WindowExtension.CanCloseWithEsc="True" extensions:WindowExtension.SizeToContent="Manual" 
+             extensions:WindowExtension.WindowStartupLocation="CenterOwner" extensions:WindowExtension.WindowTitle="Album wählen">
+    <UserControl.Resources>
+        <Style x:Key="AlbumItemStyle" TargetType="{x:Type ListViewItem}">
+            <Setter Property="Margin" Value="5,5,5,5"/>
+            <Setter Property="Padding" Value="0,0,0,0"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate  TargetType="{x:Type ListViewItem}">
+                        <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Border x:Name="border" BorderBrush="{x:Null}" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="2.5"/>
+                            <StackPanel HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
+                                <ContentPresenter/>
+                            </StackPanel>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ListView ItemsSource="{Binding AlbumList}" SelectedItem="{Binding SelectedAlbum,Mode=TwoWay}" HorizontalContentAlignment="Left"
+                  ItemContainerStyle="{StaticResource AlbumItemStyle}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <Grid Background="AliceBlue">
+                            <StackPanel>
+                                <Image Height="90" Width="90" HorizontalAlignment="Center" Source="{Binding SquareThumbnailUrl,Mode=OneWay}"/>
+                                <TextBlock HorizontalAlignment="Center" Text="{Binding Title,Mode=OneWay}"/>
+                            </StackPanel>
+                        </Grid>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
+        <DockPanel Grid.Row="1">
+            <Slider x:Name="ZoomSlider" DockPanel.Dock="Left" Minimum="24" Maximum="150" Value="64" Margin="5" Orientation="Vertical"/>
+            <ListView ItemsSource="{Binding SelectedAlbum.Photos,Mode=OneWay}" Grid.Row="1"
+                      ItemContainerStyle="{StaticResource AlbumItemStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel Orientation="Horizontal">
+                            <Grid>
+                                <StackPanel>
+                                    <Image Height="{Binding ElementName=ZoomSlider, Path=Value}" Width="{Binding ElementName=ZoomSlider, Path=Value}" 
+                                           HorizontalAlignment="Center" Source="{Binding ThumbnailUrl,Mode=OneWay}"/>
+                                    <TextBlock HorizontalAlignment="Center" Text="{Binding Title,Mode=OneWay}"/>
+                                </StackPanel>
+                            </Grid>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </DockPanel>
+        <DockPanel Grid.Row="2" LastChildFill="False" HorizontalAlignment="Right" Margin="3">
+            <Button Content="_Abbruch" x:Name="btnAbort" Command="{Binding AbortCommand}" IsCancel="True" Padding="3" Margin="3"/>
+            <Button Content="Übern_ehmen" x:Name="btnChoose" Command="{Binding AcceptCommand}" IsDefault="True" Padding="3" Margin="3"/>
+        </DockPanel>
+    </Grid>
+</UserControl>

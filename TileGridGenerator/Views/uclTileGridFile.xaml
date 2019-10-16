@@ -1,0 +1,151 @@
+﻿<UserControl x:Class="uclTileGridFile"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TileGridGenerator"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:viewmodel="clr-namespace:TileGridGenerator.ViewModel"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,Type={x:Type viewmodel:TileGridFileViewModel}}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Titel"/>
+            <TextBox Text="{Binding Title}" Width="150"/>
+        </StackPanel>
+        
+        <GroupBox Header="Ausgewähltes Flickr Album" Grid.Row="1">
+            <DockPanel LastChildFill="False">
+                <Label Content="AlbumId:" DockPanel.Dock="Left"/>
+                <TextBox IsReadOnly="True" Text="{Binding LastPhotoSetId,Mode=OneWay}" DockPanel.Dock="Left" Width="150"/>
+                <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center">
+                    <Hyperlink Command="{Binding SearchAlbumCommand}">
+                        <Run Text="Album suchen"/>
+                    </Hyperlink>
+                </TextBlock>
+                <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5">
+                    <Run Text="{Binding AviablePhotos.Count,FallbackValue=0,Mode=OneWay}"/>
+                    <Run>Bilder im Album vorhanden</Run>
+                </TextBlock>
+            </DockPanel>
+        </GroupBox>
+
+        <Expander Header="Allgemeine Einstellungen" Grid.Row="2" IsExpanded="True">
+            <Expander.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="FontFamily" Value="Consola"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </Expander.Resources>
+            <DockPanel LastChildFill="False">
+                <WrapPanel DockPanel.Dock="Top">
+                    <StackPanel  Orientation="Horizontal" Margin="5">
+                        <Label Content="Rahmenfarbe:"/>
+                        <xctk:ColorPicker SelectedColor="{Binding BorderColor}" ShowDropDownButton="True" Width="150"/>
+                    </StackPanel>
+                    <StackPanel  Orientation="Horizontal" Margin="5">
+                        <Label Content="Hintergrundfarbe:"/>
+                        <xctk:ColorPicker SelectedColor="{Binding Background}" ShowDropDownButton="True" Width="150"/>
+                    </StackPanel>
+                    <StackPanel  Orientation="Horizontal" Margin="5">
+                        <Label Content="Rahmenbreite:"/>
+                        <mah:NumericUpDown Value="{Binding BorderWidth}" Minimum="0" Maximum="1000" Width="90"/>
+                    </StackPanel>
+                    <StackPanel  Orientation="Horizontal" Margin="5">
+                        <Label Content="Animationsdauer für Zoomfunktion:"/>
+                        <Slider Minimum="0" Maximum="1000" Value="{Binding ZoomAnimationDuration}" SmallChange="1" LargeChange="10" Width="150"/>
+                    </StackPanel>
+                    <StackPanel  Orientation="Horizontal" Margin="5">
+                        <Label Content="Zoombereich:"/>
+                        <Slider Minimum="1" Maximum="1.3" Value="{Binding ZoomArea}" SmallChange="0.01" LargeChange="0.1" Width="150"/>
+                    </StackPanel>
+                    <!--<StackPanel  Orientation="Horizontal" Margin="5">
+                        <Label Content="Zoombereich:"/>
+                        <Slider Minimum="1" Maximum="1.3" Value="{Binding ZoomArea}" SmallChange="0.01" LargeChange="0.1" Width="150"/>
+                    </StackPanel>-->
+                    <StackPanel  Orientation="Horizontal" Margin="5">
+                        <Label Content="Schriftgröße Titeltext:"/>
+                        <mah:NumericUpDown Value="{Binding TitleFontSize}" Minimum="0" Maximum="1000" Width="90"/>
+                    </StackPanel>
+                    <StackPanel  Orientation="Horizontal" Margin="5">
+                        <Label FontFamily="Consola" FontWeight="Bold">Titel Fett</Label>
+                        <mah:ToggleSwitch IsChecked="{Binding TitleBold}" OffLabel="" OnLabel="">
+
+                        </mah:ToggleSwitch>
+                    </StackPanel>
+                    <StackPanel  Orientation="Horizontal" Margin="5">
+                        <Label Content="Schriftgröße Beschreibungstext:"/>
+                        <mah:NumericUpDown Value="{Binding DescriptionFontSize}" Minimum="0" Maximum="1000" Width="90"/>
+                    </StackPanel>
+                    <StackPanel  Orientation="Horizontal" Margin="5">
+                        <Label FontFamily="Consola" FontWeight="Bold">Beschreibung Fett</Label>
+                        <mah:ToggleSwitch IsChecked="{Binding DescriptionBold}" OffLabel="" OnLabel=""/>
+                    </StackPanel>
+                    <StackPanel  Orientation="Horizontal" Margin="5">
+                        <Label Content="Schriftfarbe:"/>
+                        <xctk:ColorPicker SelectedColor="{Binding FontColor}" ShowDropDownButton="True" Width="150" VerticalAlignment="Center" Height="26"/>
+                    </StackPanel>
+                    <StackPanel  Orientation="Horizontal" Margin="5">
+                        <Label Content="Schriftart:"/>
+                        <ComboBox xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" ItemTemplate="{DynamicResource FontTemplate}"
+                                  VerticalAlignment="Center" VerticalContentAlignment="Center" Width="200" SelectedItem="{Binding FontFamily}">
+                            <ComboBox.Resources>
+                                <CollectionViewSource x:Key="myFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+                                    <CollectionViewSource.SortDescriptions>
+                                        <ComponentModel:SortDescription PropertyName="Source" />
+                                    </CollectionViewSource.SortDescriptions>
+                                </CollectionViewSource>
+                                <Style x:Key="FontStyle">
+                                    <Setter Property="Control.FontFamily" Value="{Binding Source}" />
+                                    <Setter Property="Control.FontSize" Value="13" />
+                                </Style>
+                                <DataTemplate x:Key="FontTemplate">
+                                    <StackPanel VirtualizingStackPanel.IsVirtualizing="True">
+                                        <TextBlock Style="{StaticResource FontStyle}" Text="{Binding Source}" ToolTip="{Binding Source}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.Resources>
+                            <ComboBox.ItemsSource>
+                                <Binding Source="{StaticResource myFonts}" />
+                            </ComboBox.ItemsSource>
+                        </ComboBox>
+                    </StackPanel>
+                </WrapPanel>
+
+                <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center">
+                    <Hyperlink Command="{Binding SearchAlbumCommand}">
+                        <Run Text="Album suchen"/>
+                    </Hyperlink>
+                </TextBlock>
+            </DockPanel>
+        </Expander>
+
+        <GroupBox Header="Bilder" Grid.Row="3" IsEnabled="{Binding HasPhotoSetId}">
+            <DockPanel LastChildFill="True">
+                <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Right">
+                    <StackPanel  Orientation="Horizontal">
+                        <Button Content="{StaticResource IconPlus}" Margin="3" Command="{Binding AddTileItem}"/>
+                        <Button Content="{StaticResource IconDelete}" Margin="3" Command="{Binding RemoveTileItem}"/>
+                    </StackPanel>
+                </StackPanel>
+                <ListBox ItemsSource="{Binding PhotoItems}" ScrollViewer.CanContentScroll="False" SelectedItem="{Binding SelectedPhotoItem}"
+                         MinWidth="200">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type viewmodel:TileItemViewModel}">
+                            <local:uclTileGridItem/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>

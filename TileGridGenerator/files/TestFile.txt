@@ -1,0 +1,151 @@
+﻿
+<Style>
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+  border-width: 3px;
+  
+}
+
+/* Create four equal columns that sits next to each other */
+.column {
+  flex: 25%;
+  max-width: 25%;
+  padding: 0 4px;
+}
+
+.column img {
+  background-color: aqua;
+  margin-top: 0px;
+  vertical-align: middle;
+  width: 100%;
+  padding: 5px;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 800px) {
+  .column {
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    flex: 100%;
+    max-width: 100%;
+  }
+}
+
+
+
+.zoom {
+  transition: transform .4s; /* Animation */
+}
+
+.zoom:hover {
+  transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+
+ /* Container holding the image and the text */
+ .container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+/* Bottom left text */
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+  text-align: left;
+}
+
+/* Top left text */
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  text-align: left;
+}
+
+/* Top right text */
+.top-right {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  text-align: right;
+}
+
+/* Bottom right text */
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  text-align: right;
+}
+
+/* Centered text */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+} 
+
+.normalFont {
+    font-size: 18px;
+}
+.miniFont {
+    font-size: 12px;
+}
+
+</Style>
+<div class="row">
+  <div class="column">
+    <div class="zoom">
+        <div class="container">
+            <img src="https://www.skoda.at/media/Tiles_Item_Image_Component/18-1327-2024-image/dh-914-b6a36d/fd6f9d5f/1545899682/skoda-limited-modelle.jpg"/>
+            <div class="bottom-right">
+                <div class="normalFont">Das ist ein Test1</div>
+                <div class="minifont">Mit Zusatztext</div>
+            </div>
+        </div>
+    </div>
+        <div class="zoom">
+                <div class="container">
+                    <img src="https://www.skoda.at/media/Tiles_Item_Image_Component/18-1327-2025-image/dh-455-b6a36d/80a51ddd/1569489945/move-on-titelseite.jpg"/>
+                    <div class="bottom-right">
+                        <div class="normalFont">Das ist ein Test2</div>
+                        <div class="minifont">Mit Zusatztext</div>
+                    </div>
+                </div>      
+            </div>
+    
+  </div>
+  <div class="column">
+        <div class="zoom">
+            <div class="container">
+                <img src="https://www.skoda.at/media/Tiles_Item_Image_Component/18-1327-2025-image/dh-455-b6a36d/80a51ddd/1569489945/move-on-titelseite.jpg"/>
+                <div class="bottom-right">
+                    <div class="normalFont">Das ist ein Test3</div>
+                    <div class="minifont">Mit Zusatztext</div>
+                </div>
+            </div>      
+        </div>
+        <div class="zoom">
+                <div class="container">
+                    <img src="https://live.staticflickr.com/65535/48869781912_25b1237860_m.jpg"/>
+                    <div class="bottom-right">
+                        <div class="normalFont">Das ist ein Test4</div>
+                        <div class="minifont">Mit Zusatztext</div>
+                    </div>
+                </div>      
+            </div>
+  </div>
+</div>
