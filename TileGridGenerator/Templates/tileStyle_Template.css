@@ -1,4 +1,4 @@
-﻿.row {
+﻿.tileRow {
     display: flex;
     flex-wrap: wrap;
     padding: 0 0px;
@@ -6,14 +6,14 @@
 }
 
 /* Create four equal columns that sits next to each other */
-.column {
+.tileColumn {
     background-color: $Background$;
     flex: 23%;
     max-width: 25%;
     padding: 0 $BorderWidth$px;
 }
 
-    .column img {
+    .tileColumn img {
         background-color: $BorderColor$;
         margin-top: 0px;
         vertical-align: middle;
@@ -23,7 +23,7 @@
 
 /* Responsive layout - makes a two column-layout instead of four columns */
 @media screen and (max-width: 800px) {
-    .column {
+    .tileColumn {
         flex: 45%;
         max-width: 50%;
     }
@@ -31,7 +31,7 @@
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 400px) {
-    .column {
+    .tileColumn {
         flex: 100%;
         max-width: 100%;
     }
@@ -39,17 +39,17 @@
 
 
 
-.zoom {
+.tileZoom {
     transition: transform .$AnimationTransform$s; /* Animation */
 }
 
-    .zoom:hover {
+    .tileZoom:hover {
         transform: scale($ZoomHover$); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
     }
 
 
 /* Container holding the image and the text */
-.container {
+.tileContainer {
     position: relative;
     text-align: center;
     color: white;

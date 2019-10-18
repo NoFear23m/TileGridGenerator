@@ -231,17 +231,17 @@ Namespace ViewModel
         Private Function GenerateHtmlText() As String
             Dim htmlStringBuilder As New StringBuilder
             For r As Integer = 0 To 0 ' SelectedFile.PhotoItems.Count Mod 4
-                htmlStringBuilder.AppendFormat("<div class=""{0}"">", "row") : IndentCursor(htmlStringBuilder, True, 2)
+                htmlStringBuilder.AppendFormat("<div class=""{0}"">", "tileRow") : IndentCursor(htmlStringBuilder, True, 2)
 
                 For c As Integer = 0 To SelectedFile.Columns - 1
-                    htmlStringBuilder.AppendFormat("<div class=""{0}"">", "column") : IndentCursor(htmlStringBuilder, True, 4)
+                    htmlStringBuilder.AppendFormat("<div class=""{0}"">", "tileColumn") : IndentCursor(htmlStringBuilder, True, 4)
 
                     Dim cRow = r : Dim cColumn = c
                     Dim elementsToInsert = SelectedFile.PhotoItems.Where(Function(p) p.Column - 1 = cColumn).ToList
                     For Each e In elementsToInsert
 
-                        If e.UseZoomingEffect Then htmlStringBuilder.AppendFormat("<div class=""{0}"">", "zoom") : IndentCursor(htmlStringBuilder, True, 6)
-                        htmlStringBuilder.AppendFormat("<div class=""{0}"">", "container") : IndentCursor(htmlStringBuilder, True, 8)
+                        If e.UseZoomingEffect Then htmlStringBuilder.AppendFormat("<div class=""{0}"">", "tileZoom") : IndentCursor(htmlStringBuilder, True, 6)
+                        htmlStringBuilder.AppendFormat("<div class=""{0}"">", "tileContainer") : IndentCursor(htmlStringBuilder, True, 8)
                         htmlStringBuilder.AppendFormat("<img src=""{0}""/>", e.SmallPhotoUrl) : IndentCursor(htmlStringBuilder, True, 10)
 
                         If Not String.IsNullOrEmpty(e.TitleText) Or Not String.IsNullOrEmpty(e.DescriptionText) Then
